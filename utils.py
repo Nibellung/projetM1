@@ -24,6 +24,7 @@ def load_dataset(pathname:str) -> pd.DataFrame():
     data : DataFrame
         All data in the database.
     """
+    firstLine = True
     # check the file format through its extension
     if pathname[-4:] != '.csv':
         raise OSError("The dataset must be in csv format")
@@ -34,12 +35,16 @@ def load_dataset(pathname:str) -> pd.DataFrame():
         # extract the data
         data = []
         for row in reader:
-            data.append(row)
+            if firstLine:
+                parameters = row
+                firstLine = False
+            else:
+                data.append(row)
         # converts Python lists into NumPy matrices
         data = np.array(data, dtype=np.str)
         
         # converts NumPy matrices into pandas dataframe
-        df = pd.DataFrame(data, columns=["recency","history_segment","history","mens","womens","zip_code","newbie","channel","segment","visit","conversion","spend"])
+        df = pd.DataFrame(data, columns=parameters)
         
     # return data
     return df
