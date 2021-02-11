@@ -20,3 +20,6 @@ class Uplift(object):
         
     def fit(self):
         self.rf.fit(self.dA, self.lA)
+    
+    def predict(self):
+        return self.rf.predict(self.dT)
