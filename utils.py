@@ -48,3 +48,26 @@ def load_dataset(pathname:str) -> pd.DataFrame():
         
     # return data
     return df
+
+"""************************************************************************"""
+
+def setTrainDataSet(df:pd.DataFrame, sizeTrainDataSet:int) -> None:
+    """
+    Separation du dataset en un dataset d'apprentissage
+    et un dataset de test
+    
+    Parameters
+    ----------
+    sizeTrainDataSet : int
+        taille en % du dataset d'apprentissage
+        
+    Returns
+    -------
+    trainDataSet, testDataSet : tuple
+        dataset d'entrainement et de test
+    """
+    lenDF = len(df.index)
+    sizeTrainDataSet = int(lenDF * (sizeTrainDataSet / 100))
+    trainDataSet = df.loc[0:sizeTrainDataSet]
+    testDataSet = df.loc[sizeTrainDataSet+1:lenDF]
+    return trainDataSet, testDataSet
